@@ -400,8 +400,8 @@ cancel_consumer_handler(QName, {ConsumerTag, ChPid}) ->
                                   [QName, ChPid, ConsumerTag]).
 
 cancel_consumer(QName, ChPid, ConsumerTag) ->
-    catch rabbit_core_metrics:consumer_deleted(ChPid, ConsumerTag, QName),
-    emit_consumer_deleted(ChPid, ConsumerTag, QName, ?INTERNAL_USER).
+    emit_consumer_deleted(ChPid, ConsumerTag, QName, ?INTERNAL_USER),
+    catch rabbit_core_metrics:consumer_deleted(ChPid, ConsumerTag, QName).
 
 local_or_remote_handler(ChPid, Module, Function, Args) ->
     Node = node(ChPid),
